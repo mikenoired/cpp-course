@@ -1,8 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <iostream>
 #define N 20
 #define max(a,b) (a>b?a:b)
+using namespace std;
 
 typedef struct node{
 	int key;// Ключ, по которому строится дерево
@@ -51,17 +53,36 @@ void inorder(pNode root){
     }
 }
 
+// C STYLE
+// void Nnodes(pNode root, int *p) {
+//     if (!root) return;
+//     (*p)++;
+//     Nnodes(root->left, p);
+//     Nnodes(root->right, p);
+// }
+
+// C++ STYLE
+void Nnodes(pNode root, int& p) {
+    if (!root) return;
+    p++;
+    Nnodes(root->left, p);
+    Nnodes(root->right, p);
+}
+
 int main(){
     pNode p,root=NULL;
-    int i,k,*h=&k;
+    int i, d, k = 0;
     srand(time(NULL));
+    cout << "INPUT DATA:\n";
     for (i=0;i<N;i++) {
         int d = rand()%70;
         root=addnode(d,root);
-        printf("%d; ",d);
+        cout << d << "; ";
     }
-    printf("\n ");
-    puts("PREORDER");  preorder(root);  printf("\n");
-    puts("POSTORDER"); postorder(root); printf("\n");
-    puts("INORDER");   inorder(root);   printf("\n");
+    cout << "\n ";
+    Nnodes(root, k);
+    cout << "Nnodes: " << k << "\n";
+    cout << "PREORDER: ";  preorder(root);  cout << "\n";
+    cout << "POSTORDER: "; postorder(root); cout << "\n";
+    cout << "INORDER: ";   inorder(root);   cout << "\n";
 }
